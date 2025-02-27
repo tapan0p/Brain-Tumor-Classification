@@ -25,6 +25,7 @@ class CNN_model(nn.Module):
 
         for epoch in range(epochs):
             total_train_loss =0
+            train_accuracy = 0
             for image,target in train_loader:
                 optimizer.zero_grad()
                 output =self.forward(image)
@@ -32,18 +33,23 @@ class CNN_model(nn.Module):
                 loss.backward()
                 optimizer.step()
                 total_train_loss +=loss.item()
+                _,predicted = output.max(1)
+                train_accuracy += predicted.eq(target).sum().item()
 
-            print(f"Epoch {epoch+1}/{epochs}, loss = {total_train_loss/len(train_loader)}")
+            print(f"Epoch {epoch+1}/{epochs}, training loss = {total_train_loss/len(train_loader)}, training accuracy = {train_accuracy/len(train_loader)}")
 
-            total_valid_loss=0 
-            for image, target in valid_loader:
-                output = self.forward(image)
-                loss = criterion(output,target)
-                loss.backward()
-                optimizer.step()
-                total_valid_loss += loss.item()
-            
-            print(f"Epoch {epoch+1}/{epochs},loss = {total_valid_loss/len(valid_loader)}")
+            with torch.no_grad():
+                total_valid_loss=0 
+                valid_accuracy = 0
+                for image, target in valid_loader:
+                    output = self.forward(image)
+                    loss = criterion(output,target)
+                    loss.backward()
+                    optimizer.step()
+                    total_valid_loss += loss.item()
+                    _,predicted = output.max(1) 
+                    valid_accuracy += predicted.eq(target).sum().item()
+                print(f"Epoch {epoch+1}/{epochs},validation loss = {total_valid_loss/len(valid_loader)}, validation accuracy = {valid_accuracy/len(valid_loader)}")
         print("Training complete")
 
 

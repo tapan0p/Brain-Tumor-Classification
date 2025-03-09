@@ -155,9 +155,7 @@ The model achieves promising results in classifying brain tumors from MRI scans:
 
 ## Interpretability
 
-To enhance the transparency of the model's decision-making process, Grad-CAM is  employed to highlight the regions of interest in the MRI scans that contribute most significantly to the classification decision.
-
-## License
+To enhance the model's decision-making process transparency, Grad-CAM highlights the regions of interest in the MRI scans that contribute most significantly to the classification decision.
 
 ## Acknowledgements
 

@@ -150,7 +150,8 @@ The model achieves promising results in classifying brain tumors from MRI scans:
   
 ![Alt Text](https://github.com/tapan0p/Brain-Tumor-Classification/blob/main/Plots/confusion_matrix.png)
 - Loss and accuracy plot during training:
-![Alt Text](Plots\accuracy_plot.png)
+- 
+![Alt Text](https://github.com/tapan0p/Brain-Tumor-Classification/blob/main/Plots/accuracy_plot.png)
 
 ## Interpretability
 

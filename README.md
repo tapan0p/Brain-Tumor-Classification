@@ -147,7 +147,7 @@ The model achieves promising results in classifying brain tumors from MRI scans:
 - F1 Score: 97.58
 - Avg Inference Time per Image: 0.000209 sec
 - Confusion matrix:
-![Alt Text](Plots\confusion_matrix.png)
+![Alt Text](https://github.com/tapan0p/Brain-Tumor-Classification/blob/main/Plots/confusion_matrix.png)
 - Loss and accuracy plot during training:
 ![Alt Text](Plots\accuracy_plot.png)
 

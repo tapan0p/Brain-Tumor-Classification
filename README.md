@@ -147,15 +147,15 @@ The model achieves promising results in classifying brain tumors from MRI scans:
 - F1 Score: 97.58
 - Avg Inference Time per Image: 0.000209 sec
 - Confusion matrix:
-![Alt Text](Plots\confusion_matrix.png)
+  
+![Alt Text](https://github.com/tapan0p/Brain-Tumor-Classification/blob/main/Plots/confusion_matrix.png)
 - Loss and accuracy plot during training:
-![Alt Text](Plots\accuracy_plot.png)
+
+![Alt Text](https://github.com/tapan0p/Brain-Tumor-Classification/blob/main/Plots/accuracy_plot.png)
 
 ## Interpretability
 
-To enhance the transparency of the model's decision-making process, Grad-CAM is  employed to highlight the regions of interest in the MRI scans that contribute most significantly to the classification decision.
-
-## License
+To enhance the model's decision-making process transparency, Grad-CAM highlights the regions of interest in the MRI scans that contribute most significantly to the classification decision.
 
 ## Acknowledgements
 

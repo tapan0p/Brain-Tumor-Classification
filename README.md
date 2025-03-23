@@ -141,10 +141,10 @@ The `brain-tumor-classification-tl.ipynb` notebook demonstrates:
 
 The model achieves promising results in classifying brain tumors from MRI scans:
 
-- Accuracy: 97.56%
-- Precision: 97.68%
-- Recall: 97.56
-- F1 Score: 97.58
+- Accuracy: 99.16%
+- Precision: 99.16%
+- Recall: 97.16
+- F1 Score: 97.16
 - Avg Inference Time per Image: 0.000209 sec
 - Confusion matrix:
   

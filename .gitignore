@@ -1,2 +1,3 @@
 Brain_Tumor_MRI_Dataset
-Preprocessed_Dataset
+__pycache__
+webapp/venv

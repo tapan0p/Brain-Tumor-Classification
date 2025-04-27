@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroCAM-X: AI-Powered Brain Tumor Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #1abc9c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .main-container {
+            display: flex;
+            height: calc(100vh - 72px);
+            padding: 2rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .panel {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 500px;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .panel:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .upload-panel {
+            width: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .result-panel {
+            width: 450px;
+        }
+        
+        .panel-header {
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 1.2rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .panel-header i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .panel-body {
+            padding: 1.5rem;
+            height: calc(100% - 60px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .preview-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(236, 240, 241, 0.5);
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .preview-img {
+            max-width: 100%;
+            max-height: 280px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            object-fit: contain;
+        }
+        
+        .drop-instruction {
+            color: #95a5a6;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        .upload-btn {
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .upload-btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .upload-btn i {
+            margin-right: 10px;
+        }
+        
+        .predict-btn {
+            background-color: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .predict-btn:hover:not(:disabled) {
+            background-color: #16a085;
+            transform: translateY(-2px);
+        }
+        
+        .predict-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .predict-btn i {
+            margin-right: 10px;
+        }
+        
+        .result-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .result-placeholder {
+            color: #95a5a6;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .result-card {
+            width: 100%;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: var(--light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+        
+        .result-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+        
+        .result-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            margin-right: 0.5rem;
+            color: var(--dark);
+            width: 100px;
+        }
+        
+        .result-value {
+            font-weight: 500;
+        }
+        
+        .result-value.prediction {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .footer {
+            text-align: center;
+            color: var(--dark);
+            font-size: 0.8rem;
+            padding: 1rem;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto;
+                padding: 1rem;
+            }
+            
+            .panel {
+                width: 100%;
+                margin: 1rem 0;
+                height: auto;
+                min-height: 400px;
+            }
+            
+            .upload-panel, .result-panel {
+                width: 100%;
+            }
+        }
+        
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-brain"></i>
+                NeuroCAM-X
+            </a>
+            <span class="navbar-text text-light">
+                Explainable AI for Brain Tumor Detection
+            </span>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Upload Panel -->
+        <div class="panel upload-panel">
+            <div class="panel-header">
+                <i class="fas fa-upload"></i> Upload MRI Scan
+            </div>
+            <div class="panel-body">
+                <form id="upload-form">
+                    <label for="image" class="upload-btn mb-3 w-100">
+                        <i class="fas fa-file-medical-alt"></i> Select MRI Image
+                    </label>
+                    <input class="hidden-input" type="file" id="image" accept="image/*" required>
+                    
+                    <div class="preview-container">
+                        <img id="preview" class="preview-img" src="#" alt="MRI Preview">
+                        <p class="drop-instruction" id="upload-instruction">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i><br>
+                            Select a brain MRI image to analyze
+                        </p>
+                    </div>
+                    
+                    <button type="submit" class="predict-btn" id="predict-btn" disabled>
+                        <i class="fas fa-brain"></i> Analyze Brain MRI
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Result Panel -->
+        <div class="panel result-panel">
+            <div class="panel-header">
+                <i class="fas fa-chart-pie"></i> Analysis Results
+            </div>
+            <div class="panel-body">
+                <div class="result-container">
+                    <div class="result-placeholder" id="result-placeholder">
+                        <i class="fas fa-microscope fa-3x mb-3"></i>
+                        <p>Upload and analyze an MRI scan to see results</p>
+                    </div>
+                    
+                    <div class="result-card" id="result-card">
+                        <h4 class="result-title">Diagnostic Analysis</h4>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Classification:</span>
+                            <span class="result-value prediction" id="prediction-value">-</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Confidence:</span>
+                            <span class="result-value" id="confidence-value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const imageInput = document.getElementById('image');
+        const preview = document.getElementById('preview');
+        const uploadInstruction = document.getElementById('upload-instruction');
+        const predictBtn = document.getElementById('predict-btn');
+        const resultCard = document.getElementById('result-card');
+        const resultPlaceholder = document.getElementById('result-placeholder');
+        const predictionValue = document.getElementById('prediction-value');
+        const confidenceValue = document.getElementById('confidence-value');
+
+        imageInput.onchange = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadInstruction.style.display = 'none';
+                    predictBtn.disabled = false;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+                uploadInstruction.style.display = 'block';
+                predictBtn.disabled = true;
+            }
+            resultCard.style.display = 'none';
+            resultPlaceholder.style.display = 'block';
+        };
+
+        document.getElementById('upload-form').onsubmit = function(e) {
+            e.preventDefault();
+            const file = imageInput.files[0];
+            if (!file) return;
+
+            predictBtn.disabled = true;
+            predictBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Display results
+                predictionValue.textContent = data.prediction.toUpperCase();
+                confidenceValue.textContent = (data.confidence * 100).toFixed(2) + '%';
+                
+                // Show result card
+                resultPlaceholder.style.display = 'none';
+                resultCard.style.display = 'block';
+            })
+            .catch(() => {
+                alert('Error occurred during analysis. Please try again.');
+            })
+            .finally(() => {
+                predictBtn.disabled = false;
+                predictBtn.innerHTML = '<i class="fas fa-brain"></i> Analyze Brain MRI';
+            });
+        };
+    </script>
+</body>
+</html>

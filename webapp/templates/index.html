@@ -13,24 +13,22 @@
             --accent: #1abc9c;
             --light: #ecf0f1;
             --dark: #34495e;
+            --danger: #e74c3c;
         }
         
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
         }
         
         .navbar {
             background-color: var(--primary);
             padding: 1rem 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
         
         .navbar-brand {
@@ -47,53 +45,55 @@
         }
         
         .main-container {
-            display: flex;
-            height: calc(100vh - 72px);
-            padding: 2rem;
-            justify-content: center;
-            align-items: center;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
         
-        .panel {
-            background: #fff;
+        .app-container {
+            display: flex;
+            gap: 2rem;
+            background: white;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            height: 500px;
-            margin: 0 1rem;
-            transition: all 0.3s ease;
+            min-height: 600px;
         }
         
-        .panel:hover {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-        
-        .upload-panel {
-            width: 450px;
+        .left-panel {
+            flex: 1;
+            padding: 2rem;
+            border-right: 1px solid rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
         }
         
-        .result-panel {
-            width: 450px;
+        .right-panel {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(236, 240, 241, 0.3);
         }
         
-        .panel-header {
-            background-color: var(--light);
-            color: var(--dark);
-            padding: 1.2rem;
+        .panel-title {
+            font-size: 1.3rem;
             font-weight: 600;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
         }
         
-        .panel-header i {
+        .panel-title i {
             margin-right: 10px;
             color: var(--secondary);
         }
         
-        .panel-body {
-            padding: 1.5rem;
-            height: calc(100% - 60px);
+        .upload-container {
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
@@ -104,9 +104,11 @@
             align-items: center;
             justify-content: center;
             background-color: rgba(236, 240, 241, 0.5);
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 10px;
+            margin: 1.5rem 0;
             overflow: hidden;
+            height: 300px;
+            position: relative;
         }
         
         .preview-img {
@@ -121,153 +123,193 @@
         .drop-instruction {
             color: #95a5a6;
             text-align: center;
-            font-size: 0.95rem;
+            padding: 2rem;
         }
         
-        .upload-btn {
+        .btn-primary-custom {
             background-color: var(--primary);
-            color: #fff;
+            color: white;
             border: none;
-            padding: 0.7rem 1.5rem;
             border-radius: 8px;
+            padding: 0.75rem 1.5rem;
             font-weight: 600;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            width: 100%;
         }
         
-        .upload-btn:hover {
+        .btn-primary-custom:hover:not(:disabled) {
             background-color: var(--dark);
             transform: translateY(-2px);
         }
         
-        .upload-btn i {
+        .btn-primary-custom i {
             margin-right: 10px;
         }
         
-        .predict-btn {
+        .btn-accent {
             background-color: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            width: 100%;
-            margin-top: 1rem;
         }
         
-        .predict-btn:hover:not(:disabled) {
+        .btn-accent:hover:not(:disabled) {
             background-color: #16a085;
-            transform: translateY(-2px);
         }
         
-        .predict-btn:disabled {
+        .btn-accent:disabled {
             background-color: #bdc3c7;
             cursor: not-allowed;
-        }
-        
-        .predict-btn i {
-            margin-right: 10px;
         }
         
         .result-container {
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
         
         .result-placeholder {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             color: #95a5a6;
             text-align: center;
             padding: 2rem;
         }
         
         .result-card {
-            width: 100%;
-            padding: 1.5rem;
-            border-radius: 8px;
-            background-color: var(--light);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             display: none;
+            flex-grow: 1;
         }
         
-        .result-title {
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
-        }
-        
-        .result-item {
+        .result-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            background-color: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .result-info {
+            display: flex;
+            flex-direction: column;
         }
         
         .result-label {
             font-weight: 600;
-            margin-right: 0.5rem;
             color: var(--dark);
-            width: 100px;
+            font-size: 0.9rem;
         }
         
-        .result-value {
-            font-weight: 500;
-        }
-        
-        .result-value.prediction {
-            color: var(--accent);
+        .prediction-value {
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 1.2rem;
+            color: var(--accent);
         }
         
-        .footer {
-            text-align: center;
+        .confidence-value {
+            font-weight: 500;
             color: var(--dark);
-            font-size: 0.8rem;
-            padding: 1rem;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
         }
         
-        @media (max-width: 992px) {
-            .main-container {
-                flex-direction: column;
-                height: auto;
-                overflow-y: auto;
-                padding: 1rem;
-            }
-            
-            .panel {
-                width: 100%;
-                margin: 1rem 0;
-                height: auto;
-                min-height: 400px;
-            }
-            
-            .upload-panel, .result-panel {
-                width: 100%;
-            }
+        .result-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .image-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .image-header {
+            background-color: var(--light);
+            padding: 0.75rem;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .image-header i {
+            margin-right: 8px;
+            color: var(--secondary);
+        }
+        
+        .image-body {
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+        }
+        
+        .result-image {
+            max-width: 100%;
+            max-height: 220px;
+            border-radius: 4px;
+            object-fit: contain;
         }
         
         .hidden-input {
             display: none;
+        }
+
+        @media (max-width: 992px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .left-panel, .right-panel {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .preview-container {
+                min-height: 200px;
+            }
+            
+            .result-images {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-card {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+        
+        .info-card-title {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card-title i {
+            margin-right: 8px;
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-dark">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fas fa-brain"></i>
                 NeuroCAM-X
@@ -280,56 +322,89 @@
     
     <!-- Main Content -->
     <div class="main-container">
-        <!-- Upload Panel -->
-        <div class="panel upload-panel">
-            <div class="panel-header">
-                <i class="fas fa-upload"></i> Upload MRI Scan
-            </div>
-            <div class="panel-body">
-                <form id="upload-form">
-                    <label for="image" class="upload-btn mb-3 w-100">
-                        <i class="fas fa-file-medical-alt"></i> Select MRI Image
-                    </label>
-                    <input class="hidden-input" type="file" id="image" accept="image/*" required>
-                    
-                    <div class="preview-container">
-                        <img id="preview" class="preview-img" src="#" alt="MRI Preview">
-                        <p class="drop-instruction" id="upload-instruction">
-                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i><br>
-                            Select a brain MRI image to analyze
-                        </p>
+        <div class="app-container">
+            <!-- Upload Panel -->
+            <div class="left-panel">
+                <h3 class="panel-title">
+                    <i class="fas fa-upload"></i> Upload MRI Scan
+                </h3>
+                <div class="upload-container">
+                    <form id="upload-form">
+                        <label for="image" class="btn-primary-custom mb-3">
+                            <i class="fas fa-file-medical-alt"></i> Select MRI Image
+                        </label>
+                        <input class="hidden-input" type="file" id="image" accept="image/*" required>
+                        
+                        <div class="preview-container">
+                            <img id="preview" class="preview-img" src="#" alt="MRI Preview">
+                            <div class="drop-instruction" id="upload-instruction">
+                                <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                <p>Select a brain MRI image to analyze</p>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary-custom btn-accent" id="predict-btn" disabled>
+                            <i class="fas fa-brain"></i> Analyze Brain MRI
+                        </button>
+                    </form>
+
+                    <div class="info-card">
+                        <div class="info-card-title">
+                            <i class="fas fa-info-circle"></i> About this tool
+                        </div>
+                        <p class="mb-0">NeuroCAM-X uses advanced deep learning to analyze MRI scans and classify brain tumors. The visualization shows which regions influenced the AI's decision.</p>
                     </div>
-                    
-                    <button type="submit" class="predict-btn" id="predict-btn" disabled>
-                        <i class="fas fa-brain"></i> Analyze Brain MRI
-                    </button>
-                </form>
+                </div>
             </div>
-        </div>
-        
-        <!-- Result Panel -->
-        <div class="panel result-panel">
-            <div class="panel-header">
-                <i class="fas fa-chart-pie"></i> Analysis Results
-            </div>
-            <div class="panel-body">
+            
+            <!-- Result Panel -->
+            <div class="right-panel">
+                <h3 class="panel-title">
+                    <i class="fas fa-chart-pie"></i> Analysis Results
+                </h3>
                 <div class="result-container">
                     <div class="result-placeholder" id="result-placeholder">
-                        <i class="fas fa-microscope fa-3x mb-3"></i>
+                        <i class="fas fa-microscope fa-4x mb-4 text-secondary opacity-50"></i>
                         <p>Upload and analyze an MRI scan to see results</p>
                     </div>
                     
                     <div class="result-card" id="result-card">
-                        <h4 class="result-title">Diagnostic Analysis</h4>
-                        
-                        <div class="result-item">
-                            <span class="result-label">Classification:</span>
-                            <span class="result-value prediction" id="prediction-value">-</span>
+                        <div class="result-header">
+                            <div class="result-info">
+                                <span class="result-label">CLASSIFICATION</span>
+                                <span class="prediction-value" id="prediction-value">-</span>
+                            </div>
+                            <div class="result-info text-end">
+                                <span class="result-label">CONFIDENCE</span>
+                                <span class="confidence-value" id="confidence-value">-</span>
+                            </div>
                         </div>
                         
-                        <div class="result-item">
-                            <span class="result-label">Confidence:</span>
-                            <span class="result-value" id="confidence-value">-</span>
+                        <div class="result-images">
+                            <div class="image-card">
+                                <div class="image-header">
+                                    <i class="fas fa-image"></i> Cropped Image
+                                </div>
+                                <div class="image-body">
+                                    <img id="original-img" class="result-image" />
+                                </div>
+                            </div>
+                            
+                            <div class="image-card">
+                                <div class="image-header">
+                                    <i class="fas fa-fire"></i> Grad-CAM Heatmap
+                                </div>
+                                <div class="image-body">
+                                    <img id="gradcam-img" class="result-image" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card mt-3">
+                            <div class="info-card-title">
+                                <i class="fas fa-lightbulb"></i> Interpretation
+                            </div>
+                            <p class="mb-0">The heatmap highlights regions that influenced the AI's prediction. Red areas indicate features strongly associated with the detected tumor type.</p>
                         </div>
                     </div>
                 </div>
@@ -364,7 +439,7 @@
                 predictBtn.disabled = true;
             }
             resultCard.style.display = 'none';
-            resultPlaceholder.style.display = 'block';
+            resultPlaceholder.style.display = 'flex';
         };
 
         document.getElementById('upload-form').onsubmit = function(e) {
@@ -387,6 +462,10 @@
                 // Display results
                 predictionValue.textContent = data.prediction.toUpperCase();
                 confidenceValue.textContent = (data.confidence * 100).toFixed(2) + '%';
+                
+                // Show images
+                document.getElementById('original-img').src = 'data:image/png;base64,' + data.original_img;
+                document.getElementById('gradcam-img').src = 'data:image/png;base64,' + data.gradcam_img;
                 
                 // Show result card
                 resultPlaceholder.style.display = 'none';

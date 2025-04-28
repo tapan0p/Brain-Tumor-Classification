@@ -17,10 +17,12 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     image = request.files['image']
-    prediction, confidence = inference_pipeline(image, model)
+    prediction, confidence, original_img_b64, gradcam_b64 = inference_pipeline(image, model)
     return jsonify({
         'prediction': prediction,
         'confidence': confidence,
+        'original_img': original_img_b64,
+        'gradcam_img': gradcam_b64,
     })
 
 if __name__ == '__main__':

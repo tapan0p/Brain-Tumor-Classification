@@ -92,9 +92,13 @@ Brain-Tumor-Classification/
 # Clone the repository
 git https://github.com/tapan0p/Brain-Tumor-Classification.git
 cd Brain-Tumor-Classification
+cd webapp
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Run
+python app.py
 ```
 
 ### Data Preprocessing

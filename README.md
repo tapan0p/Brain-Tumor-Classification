@@ -148,10 +148,10 @@ The model achieves promising results in classifying brain tumors from MRI scans:
 - Avg Inference Time per Image: 0.320518 ms
 - Confusion matrix:
   
-![Alt Text](Plots\confusion_matrix_06.png)
+![Alt Text](.\Plots\confusion_matrix_06.png)
 - Loss and accuracy plot during training:
 
-![Alt Text](Plots\accuracy_plot_06.png)
+![Alt Text](.\Plots\accuracy_plot_06.png)
 
 ## Interpretability
 

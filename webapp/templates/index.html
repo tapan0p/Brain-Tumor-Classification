@@ -17,12 +17,14 @@
         }
         
         html, body {
-            height: 100%;
+            min-height: 100vh;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
         
         .navbar {
@@ -48,6 +50,7 @@
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
+            flex: 1;
         }
         
         .app-container {
@@ -265,6 +268,78 @@
             display: none;
         }
 
+        .footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-brand i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+        }
+        
+        .footer-email {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #fff;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+        }
+        
+        .footer-copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+        }
+
         @media (max-width: 992px) {
             .app-container {
                 flex-direction: column;
@@ -282,6 +357,21 @@
             
             .result-images {
                 grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .footer-email {
+                justify-content: center;
             }
         }
 
@@ -303,6 +393,17 @@
         
         .info-card-title i {
             margin-right: 8px;
+        }
+        
+        /* Pulse animation for scan effect */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(26, 188, 156, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(26, 188, 156, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 188, 156, 0); }
+        }
+        
+        .analyzing {
+            animation: pulse 1.5s infinite;
         }
     </style>
 </head>
@@ -412,6 +513,36 @@
         </div>
     </div>
     
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <i class="fas fa-brain"></i>
+                NeuroCAM-X
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://github.com/tapan0p" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/tapan-mahata-949a621b9/" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://x.com/TapanMahata19" target="_blank">
+                    <i class="fab fa-x-twitter"></i> X.com
+                </a>
+            </div>
+            
+            <div class="footer-email" style="margin-top:1rem; font-size:1rem; color:#fff; opacity:0.85;">
+                <i class="fas fa-envelope"></i> mahatatapan2000@gmail.com
+            </div>
+            
+            <div class="footer-copyright">
+                &copy; 2024 Tapan Mahata. NeuroCAM-X. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
     <script>
         const imageInput = document.getElementById('image');
         const preview = document.getElementById('preview');
@@ -421,6 +552,7 @@
         const resultPlaceholder = document.getElementById('result-placeholder');
         const predictionValue = document.getElementById('prediction-value');
         const confidenceValue = document.getElementById('confidence-value');
+        const previewContainer = document.querySelector('.preview-container');
 
         imageInput.onchange = function(event) {
             const file = event.target.files[0];
@@ -449,6 +581,7 @@
 
             predictBtn.disabled = true;
             predictBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            previewContainer.classList.add('analyzing');
 
             const formData = new FormData();
             formData.append('image', file);
@@ -477,6 +610,7 @@
             .finally(() => {
                 predictBtn.disabled = false;
                 predictBtn.innerHTML = '<i class="fas fa-brain"></i> Analyze Brain MRI';
+                previewContainer.classList.remove('analyzing');
             });
         };
     </script>
